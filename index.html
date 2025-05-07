@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preeti to Unicode Converter</title>
+  <script>
+    const preetiToUnicodeMap = {
+      's': 'क',
+      'v': 'ा',
+      'u': 'ि',
+      '3': 'र',
+      'ª': 'ि',
+      'ªs': 'कि',
+    };
+
+    function convertPreetiToUnicode(text) {
+      let converted = text;
+      const keys = Object.keys(preetiToUnicodeMap).sort((a, b) => b.length - a.length);
+      keys.forEach(key => {
+        const regex = new RegExp(key, 'g');
+        converted = converted.replace(regex, preetiToUnicodeMap[key]);
+      });
+      return converted;
+    }
+
+    function handleConvert() {
+      const preetiInput = document.getElementById('preetiInput').value;
+      const unicodeOutput = convertPreetiToUnicode(preetiInput);
+      document.getElementById('unicodeOutput').value = unicodeOutput;
+    }
+
+    function copyToClipboard() {
+      const output = document.getElementById('unicodeOutput');
+      output.select();
+      document.execCommand('copy');
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900 p-6">
+  <div class="max-w-3xl mx-auto bg-white p-6 rounded-2xl shadow-md space-y-6">
+    <h1 class="text-2xl font-bold text-center">Preeti to Unicode Converter</h1>
+    <textarea id="preetiInput" class="w-full h-40 p-4 border rounded" placeholder="Paste Preeti text here..."></textarea>
+    <button onclick="handleConvert()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Convert</button>
+    <textarea id="unicodeOutput" class="w-full h-40 p-4 border rounded" placeholder="Unicode output..."></textarea>
+    <button onclick="copyToClipboard()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Copy to Clipboard</button>
+  </div>
+</body>
+</html>
